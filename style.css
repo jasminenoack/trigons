@@ -1,0 +1,169 @@
+
+ul, li, h1, h2, h3, h4, h5, h6, p, div, section, article, a, body, html, button, input, textarea {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  text-align: inherit;
+  text-decoration: none;
+  box-sizing: inherit;
+  outline: 0
+}
+
+button, a, li {
+  cursor: pointer;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  box-sizing: content-box;
+  font-family: sans-serif;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+input {
+  -webkit-appearance: none;
+}
+
+/**/
+
+.options {
+    position: relative;
+    height: 200px;  
+    margin: 20px;
+}
+
+.total {
+    position: relative;
+    top: 100%;
+    transform: translateY(-100%);
+    text-align: center;
+    margin-right: -2px;
+    border: 2px solid black;
+    display: block;
+    width: 2em;
+    float: left;
+}
+
+.option, .option-total {
+    border: 1px solid black;
+}
+
+.option-total {
+    font-weight: bold;
+}
+
+.option:not(.active) {
+    background: gray;
+}
+
+.board {
+    position: relative;
+}
+
+.triangle {
+    height: 3.464em;
+    width: 4em;
+    position: absolute;
+}
+.triangle:after {
+    position: absolute;
+    top:0;
+    left:0;
+    content: "";
+    border-style: solid;
+    border-color: blue transparent;
+    border-width: 0 2em 3.464em 2em;
+}
+.triangle.upsidedown:after {
+    position: absolute;
+    top:0;
+    left:0;
+    content: "";
+    border-style: solid;
+    border-color: red transparent;
+    border-width: 3.464em 2em 0 2em;
+}
+.triangle p {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+    top: 50%;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.triangle.upsidedown p{
+    transform: translateY(-100%);
+}
+
+.side {
+    position: absolute;
+    height: 1em;
+    width: 1em;
+    background: purple;
+    z-index: 10;
+    border-radius: 100%;
+    border-color: blue transparent;
+}
+
+.triangle.upsidedown .side:nth-child(2) {
+    top: 1.8em;
+    right: 1em;
+    background: pink;
+    transform: translateX(50%) translateY(-50%);
+}
+
+.triangle.upsidedown .side:first-child {
+    top:0em;
+    left:2em;
+    background: orange;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.triangle.upsidedown .side:last-child {
+    top: 1.8em;
+    left: 1em;
+    background: green;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.triangle:not(.upsidedown) .side:nth-child(2) {
+    z-index: 15;
+    top: 1.8em;
+    right: 1em;
+    background: yellow;
+    transform: translateX(50%) translateY(-50%);
+}
+
+.triangle:not(.upsidedown) .side:first-child {
+    z-index: 15;
+    bottom:0em;
+    left:2em;
+    background: gray;
+    transform: translateX(-50%) translateY(50%);
+}
+
+.triangle:not(.upsidedown) .side:last-child {
+    z-index: 15;
+    top: 1.8em;
+    left: 1em;
+    background: black;
+    transform: translateX(-50%) translateY(-50%);
+}
