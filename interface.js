@@ -1,3 +1,16 @@
+var test_puzzle = [
+	[11, 10, 9, 8, 12, 7, 4, 4, 13],
+	[7, 14, 8, 6, 9, 18, 17, 11, 9, 13, 11],
+	[16, 5, 5, 5, 7, 9, null, 14, 10, 8, 6, 7, 8],
+	[10, 11, 12, 5, 11, null, null, null, null, null, 9, 0, 8, 14, 11],
+	[9, 3, 12, 13, 16, null, null, null, null, null, 10, 10, 6, 12, 9],
+	[6, 4, 1, 7, 10, 8, null, 10, 11, 3, 13, 5, 8],
+	[2, 4, 6, 15, 15, 3, 9, 12, 2, 14, 6],
+	[7, 6, 15, 12, 7, 13, 12, 8, 10]
+]
+
+
+
 var create_options_table = function (nums) {
 	nums = nums || 7
 	var options = [[]]
@@ -62,7 +75,7 @@ window.build_options_table = function () {
 }
 
 window.build_puzzle_board = function () {
-	$triangle = $('<div class="triangle"><p>1</p><ul class="sides"><li class="side"></li><li class="side"></li><li class="side"></li></ul></div>')
+	$triangle = $('<div class="triangle"><p></p><ul class="sides"><li class="side"></li><li class="side"></li><li class="side"></li></ul></div>')
 	$board = $(".board")
 	var hex = new window.hexagon
 	hex.create(4)
@@ -80,17 +93,21 @@ window.build_puzzle_board = function () {
 		y += i === 0 ? 0 : 3.464
 		var row = hex.triangles[i]
 		for (var j = 0; j < row.length; j++) {
+			var triangle = row[i]
 			x += j === 0 ? 0 : 2
 			$new_tri = $triangle.clone()
 			$new_tri.css("left", "" + (x + offset * 2)+ "em")
 			$new_tri.css("top", "" + y + "em")
-			$board.append($new_tri)
 
 			if ((j % 2 !== 0 && i < 4) || (j % 2 === 0 && i >= 4)) {
 				$new_tri.addClass("upsidedown")
 			}
 
-
+			if (test_puzzle[i][j] || test_puzzle[i][j] === 0) {
+				$new_tri.find("p").text(test_puzzle[i][j])
+				triangle.value = test_puzzle[i][j]
+				$board.append($new_tri)
+			}
 		}
 	}
 
