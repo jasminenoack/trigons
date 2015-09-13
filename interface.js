@@ -112,3 +112,41 @@ window.build_puzzle_board = function () {
 	}
 
 }
+
+window.set_up_handlers = function () {
+	var $possibilities = $('<ul class="possibilities"><li class="possibility">0</li><li class="possibility">1</li><li class="possibility">2</li><li class="possibility">3</li><li class="possibility">4</li><li class="possibility">5</li><li class="possibility">6</li></ul>')
+
+	// 0 is the base, 1 is the right, 2 is the left
+	$("body").on("click", "li", function (event) {
+		var $el = $(event.currentTarget)
+		if($el.find($possibilities).length) {
+			$(".side").css("background", "")
+			$possibilities.remove()
+			return
+		} else if ($el.hasClass("possibility")) {
+			event.stopPropagation()
+			console.log("possibility")
+
+		} else if ($el.hasClass("side")) {
+			$(".side").css("background", "")
+			$el.css("background", "#AA3939")
+			$(".side").css("z-index", 10)
+			$el.css("z-index", 20)
+			var $tri = $el.closest(".triangle")
+			var side_indicator = $el.index()
+			var side_assoc
+
+			var left = $el.position().left
+            var top = $el.position().top
+			var h_mid = top + $el.height / 2
+			var width = $el.width()
+			var w_mid = left + width / 2
+
+			$el.append($possibilities)
+
+			
+		} else if ($el.hasClass("option")) {
+			console.log($el.text())
+		}	
+	})
+}
