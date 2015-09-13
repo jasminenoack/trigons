@@ -29,6 +29,7 @@ ul {
 body {
   box-sizing: content-box;
   font-family: sans-serif;
+  background: #191919;
 }
 
 img {
@@ -45,8 +46,9 @@ input {
 
 .options {
     position: relative;
-    height: 200px;  
-    margin: 20px;
+    height: 200px;
+    margin: 20px auto;
+    width: calc(38em + 40px);
 }
 
 .total {
@@ -55,26 +57,31 @@ input {
     transform: translateY(-100%);
     text-align: center;
     margin-right: -2px;
-    border: 2px solid black;
+    border: 2px solid #D3D3D3;
     display: block;
     width: 2em;
     float: left;
 }
 
-.option, .option-total {
+.option {
     border: 1px solid black;
+    box-sizing: border-box;
+    height: 1.25em;
 }
 
 .option-total {
     font-weight: bold;
 }
 
-.option:not(.active) {
-    background: gray;
+.option.active {
+    background: #FAFAFA;
 }
 
 .board {
     position: relative;
+    height: 27.8em;
+    width: 32em;
+    margin: auto;
 }
 
 .triangle {
@@ -88,8 +95,8 @@ input {
     left:0;
     content: "";
     border-style: solid;
-    border-color: blue transparent;
-    border-width: 0 2em 3.464em 2em;
+    border-color: #D3D3D3 transparent;
+    border-width: 0 2em 3.5em 2em;
 }
 .triangle.upsidedown:after {
     position: absolute;
@@ -97,8 +104,8 @@ input {
     left:0;
     content: "";
     border-style: solid;
-    border-color: red transparent;
-    border-width: 3.464em 2em 0 2em;
+    border-color: #FAFAFA transparent;
+    border-width: 3.5em 2em 0 2em;
 }
 .triangle p {
     position: relative;
@@ -117,7 +124,7 @@ input {
     position: absolute;
     height: 1em;
     width: 1em;
-    background: purple;
+    background: #6666FF;
     z-index: 10;
     border-radius: 100%;
     border-color: blue transparent;
@@ -126,21 +133,18 @@ input {
 .triangle.upsidedown .side:nth-child(2) {
     top: 1.8em;
     right: 1em;
-    background: pink;
     transform: translateX(50%) translateY(-50%);
 }
 
 .triangle.upsidedown .side:first-child {
     top:0em;
     left:2em;
-    background: orange;
     transform: translateX(-50%) translateY(-50%);
 }
 
 .triangle.upsidedown .side:last-child {
     top: 1.8em;
     left: 1em;
-    background: green;
     transform: translateX(-50%) translateY(-50%);
 }
 
@@ -148,7 +152,6 @@ input {
     z-index: 15;
     top: 1.8em;
     right: 1em;
-    background: yellow;
     transform: translateX(50%) translateY(-50%);
 }
 
@@ -156,7 +159,6 @@ input {
     z-index: 15;
     bottom:0em;
     left:2em;
-    background: gray;
     transform: translateX(-50%) translateY(50%);
 }
 
@@ -164,6 +166,5 @@ input {
     z-index: 15;
     top: 1.8em;
     left: 1em;
-    background: black;
     transform: translateX(-50%) translateY(-50%);
 }

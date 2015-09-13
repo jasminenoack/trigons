@@ -43,6 +43,7 @@ window.puzzle_options = create_options_table()
 window.build_options_table = function () {
 	var $total_temp = $('<ul class="total"></ul>')
 	var $option_temp = $('<li class="option active"></li>')
+	var $option_total_temp = $('<li class="option-total option active"></li>')
 	var $options = $(".options")
 	var next = 0
 
@@ -54,6 +55,7 @@ window.build_options_table = function () {
 			$current_total.append($option_temp.clone().text(options[i].join("")))
 			$options.append($current_total)
 		}
+		$current_total.append($option_total_temp.clone().text(next))
 
 		next = puzzle_options[next + 1] ? next + 1 : null
 	}
@@ -75,10 +77,10 @@ window.build_puzzle_board = function () {
 			offset = 0
 		}
 		var x = 0
-		y += 3.464
+		y += i === 0 ? 0 : 3.464
 		var row = hex.triangles[i]
 		for (var j = 0; j < row.length; j++) {
-			x += 2
+			x += j === 0 ? 0 : 2
 			$new_tri = $triangle.clone()
 			$new_tri.css("left", "" + (x + offset * 2)+ "em")
 			$new_tri.css("top", "" + y + "em")
