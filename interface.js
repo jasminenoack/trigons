@@ -61,7 +61,7 @@ window.build_options_table = function () {
 	var next = 0
 
 	while(next || next === 0) {
-		options = puzzle_options[next]
+		options = puzzle_options[next].sort().reverse()
 		$current_total = $total_temp.clone()
 
 		for (var i = 0; i < options.length; i++) {
@@ -116,18 +116,23 @@ window.build_puzzle_board = function () {
 window.set_up_handlers = function () {
 	var $possibilities = $('<ul class="possibilities"><li class="possibility">0</li><li class="possibility">1</li><li class="possibility">2</li><li class="possibility">3</li><li class="possibility">4</li><li class="possibility">5</li><li class="possibility">6</li></ul>')
 
-	// 0 is the base, 1 is the right, 2 is the left
 	$("body").on("click", "li", function (event) {
 		var $el = $(event.currentTarget)
 		if($el.find($possibilities).length) {
+			// closes possibilities if you click the same node
 			$(".side").css("background", "")
 			$possibilities.remove()
 			return
 		} else if ($el.hasClass("possibility")) {
+			// sets the value of the posibility to the node
 			event.stopPropagation()
-			console.log("possibility")
-
+			var choice = $el.text()
+			var $side = $el.closest(".side")
+			$side.text(choice)
+			$(".side").css("background", "")
+			$side.addClass("guess")
 		} else if ($el.hasClass("side")) {
+			// opens possibilities if you click side. 
 			$(".side").css("background", "")
 			$el.css("background", "#AA3939")
 			$(".side").css("z-index", 10)
@@ -143,10 +148,18 @@ window.set_up_handlers = function () {
 			var w_mid = left + width / 2
 
 			$el.append($possibilities)
-
-			
+		} else if ($el.hasClass("option-total")) {
+			var total = $el.text()
+			var $triangles = $(".triangle")
+			$triangles.removeClass("inspect")
+			for (var i = 0; i < $triangles.length; i++) {
+				var $triangle = $($triangles.get(i))
+				if ($triangle.text() == total) {
+					$triangle.addClass("inspect")
+				}
+			}
 		} else if ($el.hasClass("option")) {
-			console.log($el.text())
+			$el.toggleClass("active")
 		}	
 	})
 }

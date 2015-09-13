@@ -82,6 +82,7 @@ input {
     border: 1px solid black;
     box-sizing: border-box;
     height: 1.25em;
+    background: #555050;
 }
 
 .option-total {
@@ -128,7 +129,7 @@ input {
     z-index: 10;
     top: 50%;
     font-weight: bold;
-    font-size: 1em;
+    font-size: .9em;
 }
 
 .triangle.upsidedown p{
@@ -143,6 +144,8 @@ input {
     z-index: 10;
     border-radius: 100%;
     border-color: blue transparent;
+    text-align: center;
+    padding: 1px;
 }
 
 .triangle.upsidedown .side:nth-child(2) {
@@ -208,10 +211,22 @@ input {
   background: #D46A6A;
 }
 
-.option:hover {
+.option.active:hover {
   background: #949BA4;
+}
+
+.option:hover {
+  background: #6A6464;
 }
 
 .option.option-total:hover {
   background: #B19896;
+}
+
+.side.guess {
+  background: #D1D1F6;
+}
+.triangle.inspect:after {
+  border-bottom-color: #91B887;
+  border-top-color: #89D775;
 }
