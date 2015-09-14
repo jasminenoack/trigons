@@ -226,7 +226,16 @@ input {
 .side.guess {
   background: #D1D1F6;
 }
+
 .triangle.inspect:after {
   border-bottom-color: #91B887;
   border-top-color: #89D775;
+}
+
+.option.progress {
+  background: #E4DB4C;
+}
+
+.option.progress:hover {
+  background: #F5ED64;
 }

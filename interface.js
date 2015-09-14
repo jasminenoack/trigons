@@ -149,17 +149,28 @@ window.set_up_handlers = function () {
 
 			$el.append($possibilities)
 		} else if ($el.hasClass("option-total")) {
+			// highlights triangles with a specific number
+			console.log("attempt")
 			var total = $el.text()
 			var $triangles = $(".triangle")
 			$triangles.removeClass("inspect")
 			for (var i = 0; i < $triangles.length; i++) {
 				var $triangle = $($triangles.get(i))
-				if ($triangle.text() == total) {
+				if ($triangle.find("p").text() == total) {
+					console.log("tri")
 					$triangle.addClass("inspect")
 				}
 			}
 		} else if ($el.hasClass("option")) {
-			$el.toggleClass("active")
+			// rotates from active, to complete, to progress
+			if ($el.hasClass("active")) {
+				$el.removeClass("active")
+			} else if ($el.hasClass("progress")) {
+				$el.removeClass("progress")
+				$el.addClass("active")
+			} else {
+				$el.addClass("progress")
+			}
 		}	
 	})
 }
