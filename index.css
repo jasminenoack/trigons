@@ -1,0 +1,50 @@
+.clear {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.triangle span {
+    position: absolute;
+    z-index: 10;
+    font-weight: 700;
+    font-size: 30px;
+    top:50%;
+    left: 50%;
+}
+
+.triangle.up span {
+    transform: translate(-50%, 0%)
+}
+
+.triangle.down span {
+    transform: translate(-50%, -100%)
+}
+
+.triangle {
+    position: relative;
+    height: 103.92px;
+    width: 120px;
+    float: left;
+    margin-left: -60px;
+}
+
+.triangle:first-child {
+    margin-left: 0;
+}
+
+.triangle.up:after {
+    position: absolute;
+    content: "";
+    border-style: solid;
+    border-color: tomato transparent;
+    border-width: 0 60px 105px 60px;
+}
+
+.triangle.down:after {
+    position: absolute;
+    content: "";
+    border-style: solid;
+    border-color: slateblue transparent;
+    border-width: 105px 60px 0 60px;
+}
