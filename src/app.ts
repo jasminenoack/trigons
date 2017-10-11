@@ -15,7 +15,14 @@ function drawBoard(puzzle) {
                 } else {
                     div.classList.add("down")
                 }
-                div.innerHTML = "<span>" + spot.value + "</span>"
+                for (let i = 0; i < 3; i++) {
+                    const side = document.createElement('div')
+                    side.classList.add('side')
+                    div.appendChild(side)
+                }
+                const text = document.createElement('span')
+                text.innerText = spot.value
+                div.appendChild(text)
             }
             rowEl.appendChild(div)
         })

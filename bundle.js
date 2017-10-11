@@ -86,7 +86,14 @@ function drawBoard(puzzle) {
                 else {
                     div.classList.add("down");
                 }
-                div.innerHTML = "<span>" + spot.value + "</span>";
+                for (var i = 0; i < 3; i++) {
+                    var side = document.createElement('div');
+                    side.classList.add('side');
+                    div.appendChild(side);
+                }
+                var text = document.createElement('span');
+                text.innerText = spot.value;
+                div.appendChild(text);
             }
             rowEl.appendChild(div);
         });

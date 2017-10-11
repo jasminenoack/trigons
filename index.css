@@ -23,7 +23,7 @@
 
 .triangle {
     position: relative;
-    height: 103.92px;
+    height: 103.960px;
     width: 120px;
     float: left;
     margin-left: -60px;
@@ -47,4 +47,52 @@
     border-style: solid;
     border-color: slateblue transparent;
     border-width: 105px 60px 0 60px;
+}
+
+.side {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background: mistyrose;
+    z-index: 10;
+    border-radius: 100%;
+}
+
+.triangle.down .side:nth-child(2) {
+    top: 54px;
+    right: 30px;
+    transform: translateX(50%) translateY(-50%);
+}
+
+.triangle.down .side:first-child {
+    top:0px;
+    left:60px;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.triangle.down .side:nth-child(3) {
+    top: 54px;
+    left: 30px;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.triangle.up .side:nth-child(2) {
+    z-index: 15;
+    top: 54px;
+    right: 30px;
+    transform: translateX(50%) translateY(-50%);
+}
+
+.triangle.up .side:first-child {
+    z-index: 15;
+    bottom:0px;
+    left:60px;
+    transform: translateX(-50%) translateY(50%);
+}
+
+.triangle.up .side:nth-child(3) {
+    z-index: 15;
+    top: 54px;
+    left: 30px;
+    transform: translateX(-50%) translateY(-50%);
 }
