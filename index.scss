@@ -8,15 +8,6 @@
     margin: 40px;
     float: left;
 
-    .triangle span {
-        position: absolute;
-        z-index: 10;
-        font-weight: 700;
-        font-size: 30px;
-        top:50%;
-        left: 50%;
-    }
-
     .triangle {
         position: relative;
         height: 103.960px;
@@ -24,16 +15,29 @@
         float: left;
         margin-left: -60px;
 
+        span {
+            position: absolute;
+            z-index: 10;
+            font-weight: 700;
+            font-size: 30px;
+            top:50%;
+            left: 50%;
+        }
+
         &:first-child {
             margin-left: 0;
         }
 
         &.up {
+            &.match:after {
+                border-color: rgba(255, 99, 71, 1) transparent;
+            }
+
             &:after {
                 position: absolute;
                 content: "";
                 border-style: solid;
-                border-color: tomato transparent;
+                border-color: rgba(255, 99, 71, 0.30) transparent;
                 border-width: 0 60px 105px 60px;
             }
 
@@ -66,11 +70,15 @@
         }
 
         &.down {
+            &.match:after {
+                border-color: rgba(64, 42, 232, 1) transparent;
+            }
+
             &:after {
                 position: absolute;
                 content: "";
                 border-style: solid;
-                border-color: slateblue transparent;
+                border-color: rgba(64, 42, 232, 0.30) transparent;
                 border-width: 105px 60px 0 60px;
             }
 
@@ -104,14 +112,14 @@
             position: absolute;
             height: 30px;
             width: 30px;
-            background: lightseagreen;
+            background: rgba(127, 48, 237, 0.20);
             z-index: 10;
             border-radius: 100%;
             font-size: 24px;
             text-align: center;
 
             &.active {
-                background: #FF0080;
+                background: rgba(127, 48, 237, 1);
             }
         }
     }
@@ -157,7 +165,7 @@
 
 #pick {
     position: fixed;
-    background: rgba(255, 0, 132, 0.80);
+    background: rgba(255, 0, 174, 0.8);
     z-index: 20;
 
     .num {

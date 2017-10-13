@@ -16,6 +16,7 @@ function drawBoard(board, wrapper) {
             const value = spot.value;
             const div = document.createElement("div");
             div.classList.add("triangle");
+            div.classList.add("value-" + value);
             if (value !== undefined) {
                 if (spot.up) {
                     div.classList.add("up");
@@ -146,4 +147,22 @@ $(pickEl).on("click", ".num", (e) => {
     $(".active").text(value);
     $(".active").removeClass("active");
     resetPick();
+});
+
+$(optionsEl).on("click", ".nums", (e) => {
+    const el = $(e.currentTarget);
+    if (el.hasClass("placed")) {
+        el.removeClass("placed");
+        el.addClass("notPlaced");
+    } else {
+        el.removeClass("notPlaced");
+        el.addClass("placed");
+    }
+});
+
+$(optionsEl).on("click", ".value", (e) => {
+    const el = $(e.currentTarget);
+    const value = el.text();
+    $(".match").removeClass("match");
+    $(".value-" + value).addClass("match");
 });
