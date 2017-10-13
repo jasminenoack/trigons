@@ -1,42 +1,50 @@
-import * as puzzles from './puzzle'
-import * as $ from "jquery"
+import * as $ from "jquery";
+import { Board } from "./board";
+import * as puzzles from "./puzzle";
 
-const boardEl = document.getElementById("puzzle")
+const boardEl = document.getElementById("puzzle");
 
-function drawBoard(puzzle) {
-    let up = puzzle.firstDirection === "up";
-    puzzle.values.forEach((row) => {
-        const rowEl = document.createElement("div")
-        rowEl.className = "row clear"
-        for (let i = 0; i < row.length; i++) {
-            const value = row[i]
-            const div = document.createElement('div')
-            div.classList.add("triangle")
+function drawBoard(board, wrapper) {
+    const spots = board.spots;
+
+    spots.forEach((row) => {
+        const rowEl = document.createElement("div");
+        rowEl.className = "row clear";
+        row.forEach((spot) => {
+            const value = spot.value;
+            const div = document.createElement("div");
+            div.classList.add("triangle");
             if (value !== undefined) {
-                if (up) {
-                    div.classList.add("up")
+                if (spot.up) {
+                    div.classList.add("up");
                 } else {
-                    div.classList.add("down")
+                    div.classList.add("down");
                 }
                 for (let i = 0; i < 3; i++) {
-                    const side = document.createElement('div')
-                    side.classList.add('side')
-                    div.appendChild(side)
+                    const side = document.createElement("div");
+                    side.classList.add("side");
+                    div.appendChild(side);
                 }
-                const text = document.createElement('span')
-                text.innerText = value
-                div.appendChild(text)
+                const text = document.createElement("span");
+                text.innerText = value;
+                div.appendChild(text);
             }
-            rowEl.appendChild(div)
-            up = up ? false : true;
-        }
-        boardEl.appendChild(rowEl)
-    })
+            rowEl.appendChild(div);
+        });
+        wrapper.appendChild(rowEl);
+    });
 }
 
-drawBoard(puzzles.puzzle1)
+function createBoard(puzzle) {
+    const board = new Board(puzzle);
+    const wrapper = document.createElement("div");
+    drawBoard(board, wrapper);
+    boardEl.innerHTML = wrapper.outerHTML;
+}
+
+createBoard(puzzles.puzzle1);
 
 $("#puzzle").on("click", ".triangle", (e) => {
-    console.log(e)
-    console.log(e.currentTarget)
-})
+    console.log(e);
+    console.log(e.currentTarget);
+});

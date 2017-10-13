@@ -70,41 +70,47 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var puzzles = __webpack_require__(1);
 var $ = __webpack_require__(2);
+var board_1 = __webpack_require__(4);
+var puzzles = __webpack_require__(1);
 var boardEl = document.getElementById("puzzle");
-function drawBoard(puzzle) {
-    var up = puzzle.firstDirection === "up";
-    puzzle.values.forEach(function (row) {
+function drawBoard(board, wrapper) {
+    var spots = board.spots;
+    spots.forEach(function (row) {
         var rowEl = document.createElement("div");
         rowEl.className = "row clear";
-        for (var i = 0; i < row.length; i++) {
-            var value = row[i];
-            var div = document.createElement('div');
+        row.forEach(function (spot) {
+            var value = spot.value;
+            var div = document.createElement("div");
             div.classList.add("triangle");
             if (value !== undefined) {
-                if (up) {
+                if (spot.up) {
                     div.classList.add("up");
                 }
                 else {
                     div.classList.add("down");
                 }
-                for (var i_1 = 0; i_1 < 3; i_1++) {
-                    var side = document.createElement('div');
-                    side.classList.add('side');
+                for (var i = 0; i < 3; i++) {
+                    var side = document.createElement("div");
+                    side.classList.add("side");
                     div.appendChild(side);
                 }
-                var text = document.createElement('span');
+                var text = document.createElement("span");
                 text.innerText = value;
                 div.appendChild(text);
             }
             rowEl.appendChild(div);
-            up = up ? false : true;
-        }
-        boardEl.appendChild(rowEl);
+        });
+        wrapper.appendChild(rowEl);
     });
 }
-drawBoard(puzzles.puzzle1);
+function createBoard(puzzle) {
+    var board = new board_1.Board(puzzle);
+    var wrapper = document.createElement("div");
+    drawBoard(board, wrapper);
+    boardEl.innerHTML = wrapper.outerHTML;
+}
+createBoard(puzzles.puzzle1);
 $("#puzzle").on("click", ".triangle", function (e) {
     console.log(e);
     console.log(e.currentTarget);
@@ -10392,6 +10398,75 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
+
+
+/***/ }),
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var spot_1 = __webpack_require__(5);
+var Board = /** @class */ (function () {
+    function Board(puzzle) {
+        var _this = this;
+        var values = puzzle.values;
+        this.height = puzzle.height;
+        this.width = puzzle.width;
+        this.spots = [];
+        var up = puzzle.firstDirection === "up";
+        values.forEach(function (row) {
+            var rowSpots = [];
+            for (var i = 0; i < row.length; i++) {
+                var value = row[i];
+                rowSpots.push(new spot_1.Spot(up, value));
+                up = !up;
+            }
+            _this.spots.push(rowSpots);
+        });
+        var maxNum = puzzle.maxNum;
+        this.numOptions = this.createNumOptions(maxNum);
+    }
+    Board.prototype.createNumOptions = function (maxNumber) {
+        var result = {};
+        for (var i = 0; i <= maxNumber; i++) {
+            for (var j = i; j <= maxNumber; j++) {
+                for (var k = j; k <= maxNumber; k++) {
+                    var total = i + j + k;
+                    if (!result[total]) {
+                        result[total] = {
+                            placed: [],
+                            notPlaced: []
+                        };
+                    }
+                    result[total].notPlaced.push([i, j, k]);
+                }
+            }
+        }
+        return result;
+    };
+    return Board;
+}());
+exports.Board = Board;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Spot = /** @class */ (function () {
+    function Spot(up, value) {
+        this.up = up;
+        this.value = value;
+    }
+    return Spot;
+}());
+exports.Spot = Spot;
 
 
 /***/ })
