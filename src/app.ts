@@ -83,6 +83,9 @@ function createBoard(puzzle) {
 }
 
 function fillPickEl(el, board) {
+    const blank = document.createElement("div");
+    blank.className = "num";
+    el.appendChild(blank);
     for (let i = 0; i <= board.maxNum; i++) {
         const option = document.createElement("div");
         option.className = "num";
@@ -91,15 +94,19 @@ function fillPickEl(el, board) {
     }
 }
 
-const currentBoard = createBoard(puzzles.puzzle1);
-
-$("#puzzle").on("click", ".side", (e) => {
-    const el = $(e.currentTarget);
+function resetPick() {
     pickEl.innerHTML = "";
     pickEl.style.top = "auto";
     pickEl.style.bottom = "auto";
     pickEl.style.right = "auto";
     pickEl.style.left = "auto";
+}
+
+const currentBoard = createBoard(puzzles.puzzle1);
+
+$("#puzzle").on("click", ".side", (e) => {
+    const el = $(e.currentTarget);
+    resetPick();
 
     if (el.hasClass("active")) {
         $(".active").removeClass("active");
@@ -132,4 +139,11 @@ $("#puzzle").on("click", ".side", (e) => {
             pickEl.style.left = elHorMiddle + width * 1.5 + "px";
         }
     }
+});
+
+$(pickEl).on("click", ".num", (e) => {
+    const value = e.currentTarget.innerText;
+    $(".active").text(value);
+    $(".active").removeClass("active");
+    resetPick();
 });
