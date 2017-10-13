@@ -3,6 +3,8 @@ import { Board } from "./board";
 import * as puzzles from "./puzzle";
 
 const boardEl = document.getElementById("puzzle");
+const optionsEl = document.getElementById("options");
+const pickEl = document.getElementById("pick");
 
 function drawBoard(board, wrapper) {
     const spots = board.spots;
@@ -35,16 +37,99 @@ function drawBoard(board, wrapper) {
     });
 }
 
-function createBoard(puzzle) {
-    const board = new Board(puzzle);
-    const wrapper = document.createElement("div");
-    drawBoard(board, wrapper);
-    boardEl.innerHTML = wrapper.outerHTML;
+function createOptionSet(nums, type) {
+    const numSet = document.createElement("div");
+    numSet.className = "nums " + type;
+    numSet.innerText = nums.join(" ");
+    return numSet;
 }
 
-createBoard(puzzles.puzzle1);
+function drawOptions(board, wrapper) {
+    const options = board.numOptions;
+    Object.keys(options).forEach((num) => {
+        const row = document.createElement("div");
+        row.className = "row clear";
+        const value = document.createElement("div");
+        value.className = "value";
+        value.innerText = num;
+        row.appendChild(value);
 
-$("#puzzle").on("click", ".triangle", (e) => {
-    console.log(e);
-    console.log(e.currentTarget);
+        const placedSets = options[num].placed;
+        const notPlacedSets = options[num].notPlaced;
+
+        notPlacedSets.forEach((nums) => {
+            row.appendChild(createOptionSet(nums, "notPlaced"));
+        });
+
+        placedSets.forEach((nums) => {
+            row.appendChild(createOptionSet(nums, "placed"));
+        });
+
+        wrapper.appendChild(row);
+    });
+}
+
+function createBoard(puzzle) {
+    const board = new Board(puzzle);
+    const boardWrapper = document.createElement("div");
+    drawBoard(board, boardWrapper);
+    boardEl.innerHTML = boardWrapper.outerHTML;
+
+    const optionsWrapper = document.createElement("div");
+    drawOptions(board, optionsWrapper);
+    optionsEl.appendChild(optionsWrapper);
+
+    return board;
+}
+
+function fillPickEl(el, board) {
+    for (let i = 0; i <= board.maxNum; i++) {
+        const option = document.createElement("div");
+        option.className = "num";
+        option.innerText = i + "";
+        el.appendChild(option);
+    }
+}
+
+const currentBoard = createBoard(puzzles.puzzle1);
+
+$("#puzzle").on("click", ".side", (e) => {
+    const el = $(e.currentTarget);
+    pickEl.innerHTML = "";
+    pickEl.style.top = "auto";
+    pickEl.style.bottom = "auto";
+    pickEl.style.right = "auto";
+    pickEl.style.left = "auto";
+
+    if (el.hasClass("active")) {
+        $(".active").removeClass("active");
+    } else {
+        $(".active").removeClass("active");
+        $(el).addClass("active");
+        fillPickEl(pickEl, currentBoard);
+
+        const width = el.width();
+        const height = el.height();
+        const { top, left } = el.offset();
+        const elHorMiddle = left + width / 2;
+        const elVertMiddle = top + height / 2;
+
+        const boardPosition = $(boardEl).offset();
+        const boardWidth = $(boardEl).width();
+        const boardHeight = $(boardEl).height();
+        const boardHorMiddle = boardPosition.left + boardWidth / 2;
+        const boardVertMiddle = boardPosition.left + boardHeight / 2;
+
+        if (elVertMiddle >= boardVertMiddle) {
+            pickEl.style.bottom = window.innerHeight - (elVertMiddle - height * 1.5) + "px";
+        } else {
+            pickEl.style.top = elVertMiddle + height * 1.5 + "px";
+        }
+
+        if (elHorMiddle >= boardHorMiddle) {
+            pickEl.style.right = window.innerWidth - (elHorMiddle - width * 1.5) + "px";
+        } else {
+            pickEl.style.left = elHorMiddle + width * 1.5 + "px";
+        }
+    }
 });
