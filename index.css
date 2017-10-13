@@ -4,6 +4,10 @@
     clear: both;
 }
 
+#puzzle {
+    margin: 20px;
+}
+
 .triangle span {
     position: absolute;
     z-index: 10;
@@ -53,7 +57,7 @@
     position: absolute;
     height: 30px;
     width: 30px;
-    background: mistyrose;
+    background: lightseagreen;
     z-index: 10;
     border-radius: 100%;
 }
