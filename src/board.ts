@@ -1,3 +1,4 @@
+import { Side } from "./side";
 import { Spot } from "./spot";
 
 export class Board {
@@ -12,20 +13,39 @@ export class Board {
         this.height = puzzle.height;
         this.width = puzzle.width;
         this.spots = [];
-        let up = puzzle.firstDirection === "up";
-        values.forEach((row) => {
+        const up = puzzle.firstDirection === "up";
+        this.createSpots(values, up);
+        const maxNum = puzzle.maxNum;
+        this.maxNum = maxNum;
+        this.numOptions = this.createNumOptions(maxNum);
+    }
+
+    public createSpots(values, up) {
+        values.forEach((row, rowNumber) => {
             const rowSpots = [];
-            // tslint:disable-next-line:prefer-for-of
-            for (let i = 0; i < row.length; i++) {
+            for (let i = 0; i < this.width; i++) {
                 const value = row[i];
-                rowSpots.push(new Spot(up, value));
+                const spot = new Spot(up, value);
+                rowSpots.push(spot);
+
+                // add the right side
+                spot.right = new Side();
+                if (i === 0) {
+                    spot.left = new Side();
+                } else {
+                    spot.left = rowSpots[i - 1].right;
+                }
+
+                if (up || rowNumber === 0) {
+                    spot.flat = new Side();
+                } else {
+                    spot.flat = this.spots[rowNumber - 1][i].flat;
+                }
+
                 up = !up;
             }
             this.spots.push(rowSpots);
         });
-        const maxNum = puzzle.maxNum;
-        this.maxNum = maxNum;
-        this.numOptions = this.createNumOptions(maxNum);
     }
 
     public createNumOptions(maxNumber: number) {

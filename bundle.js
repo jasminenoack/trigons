@@ -10496,29 +10496,47 @@ return jQuery;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var side_1 = __webpack_require__(11);
 var spot_1 = __webpack_require__(4);
 var Board = /** @class */ (function () {
     function Board(puzzle) {
-        var _this = this;
         var values = puzzle.values;
         this.height = puzzle.height;
         this.width = puzzle.width;
         this.spots = [];
         var up = puzzle.firstDirection === "up";
-        values.forEach(function (row) {
-            var rowSpots = [];
-            // tslint:disable-next-line:prefer-for-of
-            for (var i = 0; i < row.length; i++) {
-                var value = row[i];
-                rowSpots.push(new spot_1.Spot(up, value));
-                up = !up;
-            }
-            _this.spots.push(rowSpots);
-        });
+        this.createSpots(values, up);
         var maxNum = puzzle.maxNum;
         this.maxNum = maxNum;
         this.numOptions = this.createNumOptions(maxNum);
     }
+    Board.prototype.createSpots = function (values, up) {
+        var _this = this;
+        values.forEach(function (row, rowNumber) {
+            var rowSpots = [];
+            for (var i = 0; i < _this.width; i++) {
+                var value = row[i];
+                var spot = new spot_1.Spot(up, value);
+                rowSpots.push(spot);
+                // add the right side
+                spot.right = new side_1.Side();
+                if (i === 0) {
+                    spot.left = new side_1.Side();
+                }
+                else {
+                    spot.left = rowSpots[i - 1].right;
+                }
+                if (up || rowNumber === 0) {
+                    spot.flat = new side_1.Side();
+                }
+                else {
+                    spot.flat = _this.spots[rowNumber - 1][i].flat;
+                }
+                up = !up;
+            }
+            _this.spots.push(rowSpots);
+        });
+    };
     Board.prototype.createNumOptions = function (maxNumber) {
         var result = {};
         for (var i = 0; i <= maxNumber; i++) {
@@ -10567,18 +10585,50 @@ exports.Spot = Spot;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.puzzle1 = {
-    height: 6,
-    width: 9,
-    maxNum: 4,
     firstDirection: "up",
+    height: 6,
+    hints: [
+        {
+            column: 2,
+            location: "flat",
+            row: 0,
+            value: 2,
+        },
+        {
+            column: 3,
+            location: "right",
+            row: 0,
+            value: 2,
+        },
+        {
+            column: 5,
+            location: "flat",
+            row: 2,
+            value: 1,
+        },
+        {
+            column: 2,
+            location: "flat",
+            row: 5,
+            value: 0,
+        },
+        {
+            column: 7,
+            location: "right",
+            row: 5,
+            value: 3,
+        },
+    ],
+    maxNum: 4,
     values: [
-        [, , 3, 4, 2, 1, 2, , ,],
-        [, 6, 6, 7, 7, 5, 4, 3, ,],
-        [, 4, 5, 5, , 8, 4, 0, ,],
-        [, 7, 6, , , , 8, 6, ,],
+        [, , 3, 4, 2, 1, 2],
+        [, 6, 6, 7, 7, 5, 4, 3],
+        [, 4, 5, 5, , 8, 4, 0],
+        [, 7, 6, , , , 8, 6],
         [9, 8, , , , , , 3, 5],
-        [11, 9, 10, 10, 9, 12, 8, 6, 7]
-    ]
+        [11, 9, 10, 10, 9, 12, 8, 6, 7],
+    ],
+    width: 9,
 };
 
 
@@ -11174,6 +11224,22 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Side = /** @class */ (function () {
+    function Side(value) {
+        this.value = value;
+    }
+    return Side;
+}());
+exports.Side = Side;
 
 
 /***/ })

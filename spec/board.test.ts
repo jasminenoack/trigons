@@ -8,15 +8,16 @@ describe("board", () => {
     });
 
     it("creates a board", () => {
-        expect(board.spots.length).toEqual(puzzle1.height);
-        expect(board.spots[0].length).toEqual(puzzle1.width);
+        const spots = board.spots;
+        expect(spots.length).toEqual(puzzle1.height);
+        expect(spots[0].length).toEqual(puzzle1.width);
         expect(board.maxNum).toEqual(puzzle1.maxNum);
         const values = puzzle1.values;
         for (let rowIndex = 0; rowIndex < values.length; rowIndex++) {
             const row = values[rowIndex];
             for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
                 const value = row[columnIndex];
-                const spot = board.spots[rowIndex][columnIndex];
+                const spot = spots[rowIndex][columnIndex];
                 expect(spot.value).toEqual(value);
                 if (
                     (rowIndex % 2 === 0 && columnIndex % 2 === 0) ||
@@ -45,5 +46,19 @@ describe("board", () => {
             11: { notPlaced: [[3, 4, 4]], placed: [] },
             12: { notPlaced: [[4, 4, 4]], placed: [] },
         });
+
+        expect(spots[2][1].right).toEqual(spots[2][2].left);
+        expect(spots[2][1].flat).toEqual(spots[1][1].flat);
+
+        expect(spots[1][6].right).toEqual(spots[1][7].left);
+        expect(spots[1][7].flat).toEqual(spots[2][7].flat);
+
+        expect(spots[1][3].right).toEqual(spots[1][4].left);
+        expect(spots[1][3].left).toEqual(spots[1][2].right);
+        expect(spots[1][3].flat).toEqual(spots[2][3].flat);
+
+        expect(spots[1][4].right).toEqual(spots[1][5].left);
+        expect(spots[1][4].left).toEqual(spots[1][3].right);
+        expect(spots[1][4].flat).toEqual(spots[2][4].flat);
     });
 });
