@@ -164,64 +164,19 @@ function createBoard(puzzle) {
     optionsEl.appendChild(optionsWrapper);
     return board;
 }
-function fillPickEl(el, board) {
-    var blank = document.createElement("div");
-    blank.className = "num";
-    el.appendChild(blank);
-    for (var i = 0; i <= board.maxNum; i++) {
-        var option = document.createElement("div");
-        option.className = "num";
-        option.innerText = i + "";
-        el.appendChild(option);
-    }
-}
-function resetPick() {
-    pickEl.innerHTML = "";
-    pickEl.style.top = "auto";
-    pickEl.style.bottom = "auto";
-    pickEl.style.right = "auto";
-    pickEl.style.left = "auto";
-}
 var currentBoard = createBoard(puzzles.puzzle1);
 $("#puzzle").on("click", ".side", function (e) {
     var el = $(e.currentTarget);
-    resetPick();
-    if (el.hasClass("active")) {
-        $(".active").removeClass("active");
-    }
-    else {
-        $(".active").removeClass("active");
-        $(el).addClass("active");
-        fillPickEl(pickEl, currentBoard);
-        var width = el.width();
-        var height = el.height();
-        var _a = el.offset(), top_1 = _a.top, left = _a.left;
-        var elHorMiddle = left + width / 2;
-        var elVertMiddle = top_1 + height / 2;
-        var boardPosition = $(boardEl).offset();
-        var boardWidth = $(boardEl).width();
-        var boardHeight = $(boardEl).height();
-        var boardHorMiddle = boardPosition.left + boardWidth / 2;
-        var boardVertMiddle = boardPosition.left + boardHeight / 2;
-        if (elVertMiddle >= boardVertMiddle) {
-            pickEl.style.bottom = window.innerHeight - (elVertMiddle - height * 1.5) + "px";
-        }
-        else {
-            pickEl.style.top = elVertMiddle + height * 1.5 + "px";
-        }
-        if (elHorMiddle >= boardHorMiddle) {
-            pickEl.style.right = window.innerWidth - (elHorMiddle - width * 1.5) + "px";
-        }
-        else {
-            pickEl.style.left = elHorMiddle + width * 1.5 + "px";
-        }
-    }
+    var value = $(".num.active").text();
+    $("#puzzle .currentFill").removeClass("currentFill");
+    $(el).addClass("currentFill");
+    el.text(value);
 });
 $(pickEl).on("click", ".num", function (e) {
-    var value = e.currentTarget.innerText;
-    $(".active").text(value);
-    $(".active").removeClass("active");
-    resetPick();
+    var target = $(e.currentTarget);
+    var value = target.text();
+    $(".num.active").removeClass("active");
+    target.addClass("active");
 });
 $(optionsEl).on("click", ".nums", function (e) {
     var el = $(e.currentTarget);
@@ -10691,7 +10646,7 @@ exports = module.exports = __webpack_require__(8)(undefined);
 
 
 // module
-exports.push([module.i, ".clear:after {\n  display: block;\n  content: \"\";\n  clear: both; }\n\n#puzzle {\n  margin: 40px;\n  float: left; }\n  #puzzle .triangle {\n    position: relative;\n    height: 103.96px;\n    width: 120px;\n    float: left;\n    margin-left: -60px; }\n    #puzzle .triangle span {\n      position: absolute;\n      z-index: 10;\n      font-weight: 700;\n      font-size: 30px;\n      top: 50%;\n      left: 50%; }\n    #puzzle .triangle:first-child {\n      margin-left: 0; }\n    #puzzle .triangle.up.match:after {\n      border-color: tomato transparent; }\n    #puzzle .triangle.up:after {\n      position: absolute;\n      content: \"\";\n      border-style: solid;\n      border-color: rgba(255, 99, 71, 0.3) transparent;\n      border-width: 0 60px 103.96px 60px; }\n    #puzzle .triangle.up span {\n      transform: translate(-50%, 0%); }\n    #puzzle .triangle.up .side:nth-child(3) {\n      z-index: 15;\n      bottom: 0px;\n      left: 60px;\n      transform: translateX(-50%) translateY(50%); }\n    #puzzle .triangle.up .side:nth-child(2) {\n      z-index: 15;\n      top: 54px;\n      right: 30px;\n      transform: translateX(50%) translateY(-50%); }\n    #puzzle .triangle.up .side:nth-child(1) {\n      z-index: 15;\n      top: 54px;\n      left: 30px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle.down.match:after {\n      border-color: #7B71E8 transparent; }\n    #puzzle .triangle.down:after {\n      position: absolute;\n      content: \"\";\n      border-style: solid;\n      border-color: rgba(123, 113, 232, 0.3) transparent;\n      border-width: 103.96px 60px 0 60px; }\n    #puzzle .triangle.down span {\n      transform: translate(-50%, -100%); }\n    #puzzle .triangle.down .side:nth-child(3) {\n      top: 0px;\n      left: 60px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle.down .side:nth-child(2) {\n      top: 54px;\n      right: 30px;\n      transform: translateX(50%) translateY(-50%); }\n    #puzzle .triangle.down .side:nth-child(1) {\n      top: 54px;\n      left: 30px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle .side {\n      position: absolute;\n      height: 30px;\n      width: 30px;\n      background: rgba(209, 33, 237, 0.3);\n      z-index: 10;\n      border-radius: 100%;\n      font-size: 24px;\n      text-align: center;\n      font-weight: bold; }\n      #puzzle .triangle .side.active {\n        background: #d121ed; }\n\n#options {\n  float: left;\n  margin: 40px; }\n  #options .row div {\n    float: left;\n    font-size: 24px;\n    box-sizing: border-box;\n    text-align: center;\n    width: 60px;\n    border: 3px solid black;\n    margin: 2px 0;\n    border-right-width: 0; }\n    #options .row div:last-child {\n      border-right-width: 3px; }\n    #options .row div.value {\n      background: lightslategrey; }\n    #options .row div.nums {\n      font-weight: bold; }\n      #options .row div.nums.placed {\n        background: navy; }\n      #options .row div.nums.notPlaced {\n        background: aliceblue; }\n\n#pick {\n  position: fixed;\n  background: rgba(255, 0, 174, 0.8);\n  z-index: 20; }\n  #pick .num {\n    float: left;\n    padding: 5px 10px;\n    border: 2px solid black;\n    border-right-width: 0;\n    font-size: 40px;\n    height: 48px;\n    width: 20px; }\n    #pick .num:last-child {\n      border-right-width: 2px; }\n", ""]);
+exports.push([module.i, ".clear:after {\n  display: block;\n  content: \"\";\n  clear: both; }\n\n#puzzle {\n  margin: 40px;\n  float: left; }\n  #puzzle .triangle {\n    position: relative;\n    height: 103.96px;\n    width: 120px;\n    float: left;\n    margin-left: -60px; }\n    #puzzle .triangle span {\n      position: absolute;\n      z-index: 10;\n      font-weight: 700;\n      font-size: 30px;\n      top: 50%;\n      left: 50%; }\n    #puzzle .triangle:first-child {\n      margin-left: 0; }\n    #puzzle .triangle.up.match:after {\n      border-color: tomato transparent; }\n    #puzzle .triangle.up:after {\n      position: absolute;\n      content: \"\";\n      border-style: solid;\n      border-color: rgba(255, 99, 71, 0.3) transparent;\n      border-width: 0 60px 103.96px 60px; }\n    #puzzle .triangle.up span {\n      transform: translate(-50%, 0%); }\n    #puzzle .triangle.up .side:nth-child(3) {\n      z-index: 15;\n      bottom: 0px;\n      left: 60px;\n      transform: translateX(-50%) translateY(50%); }\n    #puzzle .triangle.up .side:nth-child(2) {\n      z-index: 15;\n      top: 54px;\n      right: 30px;\n      transform: translateX(50%) translateY(-50%); }\n    #puzzle .triangle.up .side:nth-child(1) {\n      z-index: 15;\n      top: 54px;\n      left: 30px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle.down.match:after {\n      border-color: #7B71E8 transparent; }\n    #puzzle .triangle.down:after {\n      position: absolute;\n      content: \"\";\n      border-style: solid;\n      border-color: rgba(123, 113, 232, 0.3) transparent;\n      border-width: 103.96px 60px 0 60px; }\n    #puzzle .triangle.down span {\n      transform: translate(-50%, -100%); }\n    #puzzle .triangle.down .side:nth-child(3) {\n      top: 0px;\n      left: 60px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle.down .side:nth-child(2) {\n      top: 54px;\n      right: 30px;\n      transform: translateX(50%) translateY(-50%); }\n    #puzzle .triangle.down .side:nth-child(1) {\n      top: 54px;\n      left: 30px;\n      transform: translateX(-50%) translateY(-50%); }\n    #puzzle .triangle .side {\n      position: absolute;\n      height: 30px;\n      width: 30px;\n      background: rgba(209, 33, 237, 0.3);\n      z-index: 10;\n      border-radius: 100%;\n      font-size: 24px;\n      text-align: center;\n      font-weight: bold; }\n      #puzzle .triangle .side.currentFill {\n        background: #d121ed; }\n\n#options {\n  float: left;\n  margin: 40px; }\n  #options .row div {\n    float: left;\n    font-size: 24px;\n    box-sizing: border-box;\n    text-align: center;\n    width: 60px;\n    border: 3px solid black;\n    margin: 2px 0;\n    border-right-width: 0; }\n    #options .row div:last-child {\n      border-right-width: 3px; }\n    #options .row div.value {\n      background: lightslategrey; }\n    #options .row div.nums {\n      font-weight: bold; }\n      #options .row div.nums.placed {\n        background: navy; }\n      #options .row div.nums.notPlaced {\n        background: aliceblue; }\n\n#pick {\n  z-index: 20;\n  padding: 20px 80px 0; }\n  #pick .num {\n    background: rgba(255, 0, 174, 0.6);\n    float: left;\n    padding: 5px 10px;\n    border: 2px solid black;\n    border-right-width: 0;\n    font-size: 40px;\n    height: 48px;\n    width: 20px; }\n    #pick .num:last-child {\n      border-right-width: 2px; }\n    #pick .num.active {\n      background: #ff00ae; }\n", ""]);
 
 // exports
 

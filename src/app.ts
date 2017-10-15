@@ -96,70 +96,22 @@ function createBoard(puzzle) {
     return board;
 }
 
-function fillPickEl(el, board) {
-    const blank = document.createElement("div");
-    blank.className = "num";
-    el.appendChild(blank);
-    for (let i = 0; i <= board.maxNum; i++) {
-        const option = document.createElement("div");
-        option.className = "num";
-        option.innerText = i + "";
-        el.appendChild(option);
-    }
-}
-
-function resetPick() {
-    pickEl.innerHTML = "";
-    pickEl.style.top = "auto";
-    pickEl.style.bottom = "auto";
-    pickEl.style.right = "auto";
-    pickEl.style.left = "auto";
-}
-
 const currentBoard = createBoard(puzzles.puzzle1);
 
 $("#puzzle").on("click", ".side", (e) => {
     const el = $(e.currentTarget);
-    resetPick();
+    const value = $(".num.active").text();
 
-    if (el.hasClass("active")) {
-        $(".active").removeClass("active");
-    } else {
-        $(".active").removeClass("active");
-        $(el).addClass("active");
-        fillPickEl(pickEl, currentBoard);
-
-        const width = el.width();
-        const height = el.height();
-        const { top, left } = el.offset();
-        const elHorMiddle = left + width / 2;
-        const elVertMiddle = top + height / 2;
-
-        const boardPosition = $(boardEl).offset();
-        const boardWidth = $(boardEl).width();
-        const boardHeight = $(boardEl).height();
-        const boardHorMiddle = boardPosition.left + boardWidth / 2;
-        const boardVertMiddle = boardPosition.left + boardHeight / 2;
-
-        if (elVertMiddle >= boardVertMiddle) {
-            pickEl.style.bottom = window.innerHeight - (elVertMiddle - height * 1.5) + "px";
-        } else {
-            pickEl.style.top = elVertMiddle + height * 1.5 + "px";
-        }
-
-        if (elHorMiddle >= boardHorMiddle) {
-            pickEl.style.right = window.innerWidth - (elHorMiddle - width * 1.5) + "px";
-        } else {
-            pickEl.style.left = elHorMiddle + width * 1.5 + "px";
-        }
-    }
+    $("#puzzle .currentFill").removeClass("currentFill");
+    $(el).addClass("currentFill");
+    el.text(value);
 });
 
 $(pickEl).on("click", ".num", (e) => {
-    const value = e.currentTarget.innerText;
-    $(".active").text(value);
-    $(".active").removeClass("active");
-    resetPick();
+    const target = $(e.currentTarget);
+    const value = target.text();
+    $(".num.active").removeClass("active");
+    target.addClass("active");
 });
 
 $(optionsEl).on("click", ".nums", (e) => {

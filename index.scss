@@ -127,7 +127,7 @@ $triangle-height: 103.960px;
             text-align: center;
             font-weight: bold;
 
-            &.active {
+            &.currentFill {
                 background: rgba(209, 33, 237, 1);
             }
         }
@@ -173,11 +173,10 @@ $triangle-height: 103.960px;
 }
 
 #pick {
-    position: fixed;
-    background: rgba(255, 0, 174, 0.8);
     z-index: 20;
-
+    padding: 20px 80px 0;
     .num {
+        background: rgba(255, 0, 174, 0.6);
         float: left;
         padding: 5px 10px;
         border: 2px solid black;
@@ -188,6 +187,10 @@ $triangle-height: 103.960px;
 
         &:last-child {
             border-right-width: 2px;
+        }
+
+        &.active {
+            background: rgba(255, 0, 174, 1)
         }
     }
 }
