@@ -24,8 +24,21 @@ function drawBoard(board, wrapper) {
                     div.classList.add("down");
                 }
                 for (let i = 0; i < 3; i++) {
+                    // order: left, right, flat
                     const side = document.createElement("div");
                     side.classList.add("side");
+
+                    if (i === 0) {
+                        // left
+                        side.innerText = spot.left.value ? spot.left.value : "";
+                    } else if (i === 1) {
+                        // right
+                        side.innerText = spot.right.value ? spot.right.value : "";
+                    } else {
+                        // flat
+                        side.innerText = spot.flat.value ? spot.flat.value : "";
+                    }
+
                     div.appendChild(side);
                 }
                 const text = document.createElement("span");
