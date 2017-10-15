@@ -47,6 +47,7 @@ describe("board", () => {
             12: { notPlaced: [[4, 4, 4]], placed: [] },
         });
 
+        // spots have shared sides.
         expect(spots[2][1].right).toEqual(spots[2][2].left);
         expect(spots[2][1].flat).toEqual(spots[1][1].flat);
 
@@ -60,5 +61,31 @@ describe("board", () => {
         expect(spots[1][4].right).toEqual(spots[1][5].left);
         expect(spots[1][4].left).toEqual(spots[1][3].right);
         expect(spots[1][4].flat).toEqual(spots[2][4].flat);
+
+        // board has hints
+        let currentSpot = spots[0][2];
+        expect(currentSpot.flat.value).toEqual(2);
+        expect(currentSpot.right.value).toEqual(undefined);
+        expect(currentSpot.left.value).toEqual(undefined);
+
+        currentSpot = spots[0][3];
+        expect(currentSpot.flat.value).toEqual(undefined);
+        expect(currentSpot.right.value).toEqual(2);
+        expect(currentSpot.left.value).toEqual(undefined);
+
+        currentSpot = spots[2][5];
+        expect(currentSpot.flat.value).toEqual(1);
+        expect(currentSpot.right.value).toEqual(undefined);
+        expect(currentSpot.left.value).toEqual(undefined);
+
+        currentSpot = spots[5][7];
+        expect(currentSpot.flat.value).toEqual(undefined);
+        expect(currentSpot.right.value).toEqual(3);
+        expect(currentSpot.left.value).toEqual(undefined);
+
+        currentSpot = spots[5][2];
+        expect(currentSpot.flat.value).toEqual(2);
+        expect(currentSpot.right.value).toEqual(undefined);
+        expect(currentSpot.left.value).toEqual(undefined);
     });
 });

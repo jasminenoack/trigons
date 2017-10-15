@@ -24,7 +24,7 @@ export const puzzle1 = {
             column: 2,
             location: "flat",
             row: 5,
-            value: 0,
+            value: 2,
         },
         {
             column: 7,

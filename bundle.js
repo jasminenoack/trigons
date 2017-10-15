@@ -10506,6 +10506,7 @@ var Board = /** @class */ (function () {
         this.spots = [];
         var up = puzzle.firstDirection === "up";
         this.createSpots(values, up);
+        this.addHints(this.spots, puzzle.hints);
         var maxNum = puzzle.maxNum;
         this.maxNum = maxNum;
         this.numOptions = this.createNumOptions(maxNum);
@@ -10535,6 +10536,11 @@ var Board = /** @class */ (function () {
                 up = !up;
             }
             _this.spots.push(rowSpots);
+        });
+    };
+    Board.prototype.addHints = function (spots, hints) {
+        hints.forEach(function (hint) {
+            spots[hint.row][hint.column][hint.location].value = hint.value;
         });
     };
     Board.prototype.createNumOptions = function (maxNumber) {
@@ -10610,7 +10616,7 @@ exports.puzzle1 = {
             column: 2,
             location: "flat",
             row: 5,
-            value: 0,
+            value: 2,
         },
         {
             column: 7,

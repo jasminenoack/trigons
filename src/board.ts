@@ -15,6 +15,7 @@ export class Board {
         this.spots = [];
         const up = puzzle.firstDirection === "up";
         this.createSpots(values, up);
+        this.addHints(this.spots, puzzle.hints);
         const maxNum = puzzle.maxNum;
         this.maxNum = maxNum;
         this.numOptions = this.createNumOptions(maxNum);
@@ -45,6 +46,12 @@ export class Board {
                 up = !up;
             }
             this.spots.push(rowSpots);
+        });
+    }
+
+    public addHints(spots, hints) {
+        hints.forEach((hint) => {
+            spots[hint.row][hint.column][hint.location].value = hint.value;
         });
     }
 
