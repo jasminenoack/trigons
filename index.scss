@@ -1,3 +1,6 @@
+$triangle-width: 120px;
+$triangle-height: 103.960px;
+
 .clear:after {
     display: block;
     content: "";
@@ -10,10 +13,10 @@
 
     .triangle {
         position: relative;
-        height: 103.960px;
-        width: 120px;
+        height: $triangle-height;
+        width: $triangle-width;
         float: left;
-        margin-left: -60px;
+        margin-left: $triangle-width / -2;
 
         span {
             position: absolute;
@@ -38,7 +41,7 @@
                 content: "";
                 border-style: solid;
                 border-color: rgba(255, 99, 71, 0.30) transparent;
-                border-width: 0 60px 105px 60px;
+                border-width: 0 $triangle-width / 2 $triangle-height $triangle-width / 2;
             }
 
             span {
@@ -74,15 +77,15 @@
 
         &.down {
             &.match:after {
-                border-color: rgba(64, 42, 232, 1) transparent;
+                border-color: #7B71E8 transparent;
             }
 
             &:after {
                 position: absolute;
                 content: "";
                 border-style: solid;
-                border-color: rgba(64, 42, 232, 0.30) transparent;
-                border-width: 105px 60px 0 60px;
+                border-color: rgba(#7B71E8, 0.3) transparent;
+                border-width: $triangle-height $triangle-width / 2 0 $triangle-width / 2;
             }
 
             span {
@@ -117,14 +120,15 @@
             position: absolute;
             height: 30px;
             width: 30px;
-            background: rgba(127, 48, 237, 0.20);
+            background: rgba(209, 33, 237, 0.3);
             z-index: 10;
             border-radius: 100%;
             font-size: 24px;
             text-align: center;
+            font-weight: bold;
 
             &.active {
-                background: rgba(127, 48, 237, 1);
+                background: rgba(209, 33, 237, 1);
             }
         }
     }
